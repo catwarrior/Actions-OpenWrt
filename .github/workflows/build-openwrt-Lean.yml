@@ -24,8 +24,8 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: config-x86-Lean
-  DIY_SH: diy-x86-Lean.sh
+  CONFIG_FILE: config-raspi3b-lean
+  DIY_SH: diy-raspi3b-lean.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
@@ -57,7 +57,7 @@ jobs:
    
     - name: 导入自定义
       run: |
-        git clone https://github.com/sypopo/diy ./openwrt/diy/sypopo
+        git clone https://github.com/catwarrior/diy ./openwrt/diy/sypopo
         mv ./openwrt/diy/sypopo/$CONFIG_FILE $(pwd)
         mv ./openwrt/diy/sypopo/$DIY_SH $(pwd)
         df -h && pwd
@@ -113,5 +113,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: OpenWrt-x86-Lean
+        name: OpenWrt-raspi3b-Lean
         path: ${{ env.FIRMWARE }}
