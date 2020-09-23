@@ -65,9 +65,9 @@ jobs:
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
 
-    - name: SSH连接
-      uses: sypopo/debugger-action@master
-      if: env.SSH_ACTIONS == 'true'
+#    - name: SSH连接
+#      uses: sypopo/debugger-action@master
+#      if: env.SSH_ACTIONS == 'true'
         
     - name: 下载软件包
       id: package
