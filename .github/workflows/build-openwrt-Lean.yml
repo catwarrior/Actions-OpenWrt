@@ -56,7 +56,7 @@ jobs:
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt && cd openwrt && ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
    
     - name: SSH连接
-      uses: sypopo/debugger-action@master
+      uses: catwarrior/debugger-action@master
       if: env.SSH_ACTIONS == 'true'
         
     - name: 下载软件包
