@@ -26,7 +26,7 @@ env:
   REPO_BRANCH: master
   CONFIG_FILE: config-raspi3b-lean
   DIY_SH: diy-raspi3b-lean.sh
-  SSH_ACTIONS: false
+  SSH_ACTIONS: true
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
@@ -55,19 +55,9 @@ jobs:
     - name: 下载源码
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt && cd openwrt && ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
    
-    - name: 导入自定义
-      run: |
-        git clone https://github.com/catwarrior/diy ./openwrt/diy/sypopo
-        mv ./openwrt/diy/sypopo/$CONFIG_FILE $(pwd)
-        mv ./openwrt/diy/sypopo/$DIY_SH $(pwd)
-        df -h && pwd
-        [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
-
-#    - name: SSH连接
-#      uses: sypopo/debugger-action@master
-#      if: env.SSH_ACTIONS == 'true'
+    - name: SSH连接
+      uses: sypopo/debugger-action@master
+      if: env.SSH_ACTIONS == 'true'
         
     - name: 下载软件包
       id: package
@@ -97,7 +87,7 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: OpenWrt_bin-x86-Lean
+        name: OpenWrt_bin-raspi3b-Lean
         path: openwrt/bin
 
     - name: 固件打包
